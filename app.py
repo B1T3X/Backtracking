@@ -94,11 +94,14 @@ def check_no_step_back(current_indexes, last_indexes):
 
 
 def is_word_on_board(board, word):
+    # Create initial variables for internal function use
     return_word = ""
     index_in_word = 0
     row_index = 0
     column_index = 0
     last_indexes = []
+
+    # Run until the entire word has been found or there's no consecutive pattern that makes the word up.
     while word != return_word:
         if index_in_word != len(word):
             if board[row_index][column_index] == word[index_in_word]:
