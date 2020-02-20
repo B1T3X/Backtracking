@@ -43,9 +43,13 @@ def check_down(board, row, column, letter):
         return False
 
 
-def check_no_step_back:
-    # TODO
-    pass
+def check_no_step_back(current_indexes, last_indexes):
+    #TODO - fix!
+    if current_indexes in last_indexes:
+        print(current_indexes + " in " + last_indexes)
+        return True
+    else:
+        return False
 
 
 def is_word_on_board(board, word):
@@ -53,22 +57,29 @@ def is_word_on_board(board, word):
     index_in_word = 0
     row_index = 0
     column_index = 0
+    last_indexes = []
     while word != return_word:
         print(index_in_word)
         if index_in_word != len(word):
             print(board[row_index][column_index])
             if board[row_index][column_index] == word[index_in_word]:
                 return_word += word[index_in_word]
+                print(last_indexes)
                 index_in_word += 1
                 if return_word == word:
                     return True
-                elif check_left(board, row_index, column_index, word[index_in_word]):
+                elif check_left(board, row_index, column_index, word[index_in_word]) and not check_no_step_back([row_index, column_index], last_indexes):
+                    last_indexes.append([row_index, column_index])
                     column_index -= 1
-                elif check_right(board, row_index, column_index, word[index_in_word]):
+                elif check_right(board, row_index, column_index, word[index_in_word]) and not check_no_step_back([row_index, column_index], last_indexes):
+                    last_indexes.append([row_index, column_index])
                     column_index += 1
-                elif check_up(board, row_index, column_index, word[index_in_word]):
+                elif check_up(board, row_index, column_index, word[index_in_word])\
+                        and not check_no_step_back([row_index, column_index], last_indexes):
+                    last_indexes.append([row_index, column_index])
                     row_index -= 1
                 elif check_down(board, row_index, column_index, word[index_in_word]):
+                    last_indexes.append([row_index, column_index])
                     row_index += 1
                 else:
                     return False
@@ -79,4 +90,4 @@ def is_word_on_board(board, word):
                 column_index = 0
 
 
-print(is_word_on_board(playing_board, "snsn"))
+print(is_word_on_board(playing_board, "snow"))
